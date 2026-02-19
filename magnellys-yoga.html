@@ -1,0 +1,1355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Magnelly's Yoga | Corporate & Group Classes</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --sage: #7d9e8c;
+    --sage-light: #a8c4b5;
+    --sage-dark: #4f7060;
+    --cream: #f5f0e8;
+    --warm: #e8ddd0;
+    --charcoal: #2a2a2a;
+    --gold: #c9a96e;
+    --gold-light: #e8d0a0;
+    --white: #fefefe;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background: var(--cream);
+    color: var(--charcoal);
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    width: 12px; height: 12px;
+    background: var(--sage);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.15s ease, background 0.2s;
+    transform: translate(-50%, -50%);
+  }
+  .cursor-follower {
+    width: 36px; height: 36px;
+    border: 1.5px solid var(--sage);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9998;
+    transition: transform 0.4s ease;
+    transform: translate(-50%, -50%);
+  }
+  body:hover .cursor { opacity: 1; }
+
+  /* Nav */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 1000;
+    padding: 24px 60px;
+    display: flex; align-items: center; justify-content: space-between;
+    transition: all 0.4s ease;
+  }
+  nav.scrolled {
+    background: rgba(245,240,232,0.95);
+    backdrop-filter: blur(12px);
+    padding: 16px 60px;
+    border-bottom: 1px solid rgba(125,158,140,0.2);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 300;
+    letter-spacing: 0.08em;
+    color: var(--charcoal);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--sage); font-style: italic; }
+  .nav-links { display: flex; gap: 40px; list-style: none; }
+  .nav-links a {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--charcoal);
+    text-decoration: none;
+    position: relative;
+    transition: color 0.3s;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute; bottom: -4px; left: 0;
+    width: 0; height: 1px;
+    background: var(--sage);
+    transition: width 0.35s ease;
+  }
+  .nav-links a:hover { color: var(--sage); }
+  .nav-links a:hover::after { width: 100%; }
+  .nav-cta {
+    background: var(--sage);
+    color: var(--white) !important;
+    padding: 10px 24px;
+    border-radius: 2px;
+    transition: background 0.3s ease !important;
+  }
+  .nav-cta:hover { background: var(--sage-dark) !important; color: var(--white) !important; }
+  .nav-cta::after { display: none !important; }
+
+  /* Hero */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-left {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 140px 80px 100px 80px;
+    position: relative; z-index: 2;
+  }
+  .hero-tag {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-bottom: 32px;
+    display: flex; align-items: center; gap: 16px;
+    opacity: 0; animation: fadeUp 0.8s 0.3s forwards;
+  }
+  .hero-tag::before {
+    content: '';
+    display: block; width: 40px; height: 1px;
+    background: var(--sage);
+  }
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.5rem, 6vw, 5.5rem);
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 32px;
+    opacity: 0; animation: fadeUp 0.9s 0.5s forwards;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--sage);
+    display: block;
+  }
+  .hero-subtitle {
+    font-size: 0.9rem;
+    font-weight: 300;
+    line-height: 1.8;
+    color: #666;
+    max-width: 380px;
+    margin-bottom: 48px;
+    opacity: 0; animation: fadeUp 0.9s 0.7s forwards;
+  }
+  .hero-actions {
+    display: flex; gap: 20px; align-items: center;
+    opacity: 0; animation: fadeUp 0.9s 0.9s forwards;
+  }
+  .btn-primary {
+    background: var(--charcoal);
+    color: var(--white);
+    padding: 16px 40px;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    border: none;
+    cursor: none;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s ease;
+    position: relative; overflow: hidden;
+  }
+  .btn-primary::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: var(--sage);
+    transform: translateX(-101%);
+    transition: transform 0.4s cubic-bezier(0.7,0,0.3,1);
+    z-index: 0;
+  }
+  .btn-primary:hover::before { transform: translateX(0); }
+  .btn-primary span { position: relative; z-index: 1; }
+  .btn-outline {
+    color: var(--charcoal);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-decoration: none;
+    display: flex; align-items: center; gap: 8px;
+    transition: gap 0.3s ease, color 0.3s;
+  }
+  .btn-outline:hover { color: var(--sage); gap: 16px; }
+
+  .hero-right {
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-right::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, var(--sage-dark) 0%, #3d6e56 50%, #2a5040 100%);
+    z-index: 1;
+  }
+  .hero-pattern {
+    position: absolute; inset: 0;
+    z-index: 2;
+    opacity: 0.07;
+    background-image: radial-gradient(circle, var(--white) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+  .hero-visual {
+    position: absolute; inset: 0;
+    z-index: 3;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .lotus-container {
+    width: 340px; height: 340px;
+    position: relative;
+    animation: slowRotate 30s linear infinite;
+  }
+  .lotus-container svg { width: 100%; height: 100%; }
+  .hero-quote {
+    position: absolute; bottom: 60px; left: 60px; right: 60px;
+    z-index: 4;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem;
+    font-style: italic;
+    color: rgba(255,255,255,0.85);
+    font-weight: 300;
+    line-height: 1.6;
+    border-left: 2px solid var(--gold);
+    padding-left: 20px;
+  }
+  .hero-stats {
+    position: absolute; right: 40px; top: 50%; transform: translateY(-50%);
+    z-index: 5;
+    display: flex; flex-direction: column; gap: 32px;
+  }
+  .stat-item { text-align: center; }
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.4rem;
+    font-weight: 300;
+    color: var(--white);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.6rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-top: 4px;
+  }
+  .scroll-indicator {
+    position: absolute; bottom: 40px; left: 80px;
+    display: flex; align-items: center; gap: 12px;
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: #999;
+    opacity: 0; animation: fadeUp 1s 1.2s forwards;
+  }
+  .scroll-line {
+    width: 60px; height: 1px; background: #ccc;
+    position: relative; overflow: hidden;
+  }
+  .scroll-line::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: var(--sage);
+    animation: scrollLine 2s ease-in-out infinite;
+  }
+
+  /* About strip */
+  .about-strip {
+    background: var(--charcoal);
+    padding: 24px 80px;
+    display: flex; align-items: center; gap: 60px;
+    overflow: hidden;
+  }
+  .strip-text {
+    white-space: nowrap;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    animation: marquee 20s linear infinite;
+  }
+  .strip-dot {
+    width: 4px; height: 4px;
+    background: var(--sage);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* Services */
+  .services {
+    padding: 120px 80px;
+    position: relative;
+  }
+  .section-header {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    margin-bottom: 80px;
+  }
+  .section-label {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-bottom: 16px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .section-label::before {
+    content: ''; display: block; width: 30px; height: 1px; background: var(--sage);
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 4vw, 3.5rem);
+    font-weight: 300;
+    line-height: 1.15;
+    max-width: 500px;
+  }
+  .section-title em { font-style: italic; color: var(--sage); }
+  .section-desc {
+    font-size: 0.85rem;
+    font-weight: 300;
+    line-height: 1.8;
+    color: #777;
+    max-width: 300px;
+    text-align: right;
+  }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+  .service-card {
+    background: var(--white);
+    padding: 56px 44px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.4s ease;
+    cursor: none;
+  }
+  .service-card::before {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--sage), var(--gold));
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+    transform-origin: left;
+  }
+  .service-card:hover::before { transform: scaleX(1); }
+  .service-card:hover { transform: translateY(-6px); }
+  .service-card.featured {
+    background: var(--charcoal);
+    color: var(--white);
+  }
+  .service-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 5rem;
+    font-weight: 300;
+    line-height: 1;
+    color: rgba(0,0,0,0.05);
+    position: absolute; top: 20px; right: 24px;
+    transition: color 0.3s;
+  }
+  .service-card.featured .service-number { color: rgba(255,255,255,0.06); }
+  .service-card:hover .service-number { color: rgba(125,158,140,0.12); }
+  .service-icon {
+    width: 48px; height: 48px;
+    margin-bottom: 32px;
+  }
+  .service-icon svg { width: 100%; height: 100%; }
+  .service-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.7rem;
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 16px;
+  }
+  .service-card.featured .service-name { color: var(--cream); }
+  .service-desc {
+    font-size: 0.82rem;
+    font-weight: 300;
+    line-height: 1.8;
+    color: #777;
+    margin-bottom: 32px;
+  }
+  .service-card.featured .service-desc { color: rgba(255,255,255,0.6); }
+  .service-features {
+    list-style: none;
+    display: flex; flex-direction: column; gap: 10px;
+    margin-bottom: 36px;
+  }
+  .service-features li {
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    color: #555;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .service-card.featured .service-features li { color: rgba(255,255,255,0.7); }
+  .service-features li::before {
+    content: '';
+    display: block; width: 6px; height: 1px;
+    background: var(--sage);
+    flex-shrink: 0;
+  }
+  .service-link {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--sage);
+    text-decoration: none;
+    display: flex; align-items: center; gap: 8px;
+    transition: gap 0.3s;
+  }
+  .service-card.featured .service-link { color: var(--gold); }
+  .service-link:hover { gap: 16px; }
+
+  /* Why */
+  .why {
+    background: var(--warm);
+    padding: 120px 80px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    align-items: center;
+  }
+  .why-visual {
+    position: relative;
+    height: 560px;
+  }
+  .why-block {
+    position: absolute;
+    background: var(--sage);
+    border-radius: 2px;
+  }
+  .why-block-1 {
+    width: 75%; height: 75%;
+    top: 0; right: 0;
+    background: linear-gradient(135deg, var(--sage) 0%, var(--sage-dark) 100%);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .why-block-2 {
+    width: 45%; height: 40%;
+    bottom: 0; left: 0;
+    background: var(--charcoal);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 32px;
+  }
+  .why-inner-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 4rem;
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .why-inner-label {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+    margin-top: 8px;
+    text-align: center;
+  }
+  .yoga-svg-large {
+    width: 200px; height: 200px;
+    opacity: 0.25;
+  }
+  .why-points {
+    display: flex; flex-direction: column; gap: 40px;
+    margin-top: 48px;
+  }
+  .why-point {
+    display: flex; gap: 24px; align-items: flex-start;
+  }
+  .why-point-icon {
+    width: 40px; height: 40px; flex-shrink: 0;
+    background: var(--sage);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .why-point-icon svg { width: 18px; height: 18px; }
+  .why-point-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 400;
+    margin-bottom: 6px;
+  }
+  .why-point-desc {
+    font-size: 0.8rem;
+    font-weight: 300;
+    line-height: 1.7;
+    color: #777;
+  }
+
+  /* Testimonials */
+  .testimonials {
+    padding: 120px 80px;
+    background: var(--charcoal);
+    position: relative;
+    overflow: hidden;
+  }
+  .testimonials::before {
+    content: '"';
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 30rem;
+    font-weight: 300;
+    color: rgba(255,255,255,0.02);
+    position: absolute; top: -80px; left: 40px;
+    line-height: 1;
+    pointer-events: none;
+  }
+  .testimonials .section-label { color: var(--gold); }
+  .testimonials .section-label::before { background: var(--gold); }
+  .testimonials .section-title { color: var(--white); }
+  .testi-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    margin-top: 64px;
+  }
+  .testi-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 44px 36px;
+    transition: background 0.3s, border-color 0.3s, transform 0.3s;
+    cursor: none;
+  }
+  .testi-card:hover {
+    background: rgba(125,158,140,0.12);
+    border-color: rgba(125,158,140,0.3);
+    transform: translateY(-4px);
+  }
+  .testi-stars {
+    display: flex; gap: 4px; margin-bottom: 24px;
+  }
+  .testi-stars svg { width: 14px; height: 14px; fill: var(--gold); }
+  .testi-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.7;
+    color: rgba(255,255,255,0.8);
+    margin-bottom: 28px;
+  }
+  .testi-author {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--sage-light);
+  }
+  .testi-role {
+    font-size: 0.68rem;
+    font-weight: 300;
+    color: rgba(255,255,255,0.35);
+    margin-top: 4px;
+    letter-spacing: 0.08em;
+  }
+
+  /* Process */
+  .process {
+    padding: 120px 80px;
+    background: var(--cream);
+  }
+  .process-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    margin-top: 80px;
+    position: relative;
+  }
+  .process-steps::before {
+    content: '';
+    position: absolute;
+    top: 28px; left: calc(12.5% + 20px); right: calc(12.5% + 20px);
+    height: 1px;
+    background: linear-gradient(90deg, var(--sage), var(--gold), var(--sage));
+  }
+  .step {
+    padding: 0 24px;
+    text-align: center;
+    position: relative;
+  }
+  .step-num {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: var(--white);
+    border: 2px solid var(--sage);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 32px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: var(--sage);
+    position: relative; z-index: 1;
+    transition: all 0.3s;
+  }
+  .step:hover .step-num {
+    background: var(--sage); color: var(--white);
+    transform: scale(1.1);
+  }
+  .step-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.25rem;
+    font-weight: 400;
+    margin-bottom: 12px;
+  }
+  .step-desc {
+    font-size: 0.78rem;
+    font-weight: 300;
+    line-height: 1.7;
+    color: #777;
+  }
+
+  /* Contact */
+  .contact {
+    background: linear-gradient(135deg, var(--sage-dark) 0%, #2a4a38 100%);
+    padding: 120px 80px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .contact::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+  .contact-left { position: relative; z-index: 1; }
+  .contact .section-label { color: var(--gold); }
+  .contact .section-label::before { background: var(--gold); }
+  .contact .section-title { color: var(--white); max-width: 400px; }
+  .contact-tagline {
+    font-size: 0.85rem;
+    font-weight: 300;
+    line-height: 1.8;
+    color: rgba(255,255,255,0.65);
+    margin-top: 24px;
+    max-width: 380px;
+  }
+  .contact-details {
+    margin-top: 48px;
+    display: flex; flex-direction: column; gap: 24px;
+  }
+  .contact-item {
+    display: flex; align-items: center; gap: 20px;
+  }
+  .contact-icon {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.2);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.3s;
+  }
+  .contact-item:hover .contact-icon {
+    background: var(--gold);
+    border-color: var(--gold);
+  }
+  .contact-icon svg { width: 18px; height: 18px; stroke: rgba(255,255,255,0.8); }
+  .contact-info-label {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 4px;
+  }
+  .contact-info-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 300;
+    color: var(--white);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+  .contact-info-value:hover { color: var(--gold); }
+
+  .contact-right {
+    position: relative; z-index: 1;
+  }
+  .contact-form-box {
+    background: rgba(255,255,255,0.07);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.12);
+    padding: 56px 48px;
+  }
+  .form-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 300;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+  .form-subtitle {
+    font-size: 0.78rem;
+    font-weight: 300;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 40px;
+  }
+  .form-group {
+    margin-bottom: 24px;
+  }
+  .form-group label {
+    display: block;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 10px;
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: var(--white);
+    padding: 14px 16px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 300;
+    outline: none;
+    transition: border-color 0.3s, background 0.3s;
+    cursor: none;
+  }
+  .form-group select option { background: #2a4a38; color: var(--white); }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: var(--sage-light);
+    background: rgba(255,255,255,0.1);
+  }
+  .form-group input::placeholder,
+  .form-group textarea::placeholder { color: rgba(255,255,255,0.25); }
+  .form-group textarea { height: 100px; resize: none; }
+  .form-btn {
+    width: 100%;
+    background: var(--gold);
+    color: var(--charcoal);
+    border: none;
+    padding: 18px 40px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: none;
+    transition: all 0.3s ease;
+    position: relative; overflow: hidden;
+  }
+  .form-btn:hover { background: var(--gold-light); }
+
+  /* Footer */
+  footer {
+    background: #1a1a1a;
+    padding: 60px 80px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 300;
+    color: rgba(255,255,255,0.7);
+    letter-spacing: 0.05em;
+  }
+  .footer-logo span { color: var(--sage-light); font-style: italic; }
+  .footer-copy {
+    font-size: 0.7rem;
+    font-weight: 300;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.1em;
+  }
+  .footer-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.9rem;
+    font-style: italic;
+    color: rgba(255,255,255,0.35);
+  }
+
+  /* Animations */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes slowRotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  @keyframes scrollLine {
+    0% { transform: translateX(-100%); }
+    50% { transform: translateX(0); }
+    100% { transform: translateX(100%); }
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+
+  .reveal {
+    opacity: 0; transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible {
+    opacity: 1; transform: translateY(0);
+  }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  @media (max-width: 900px) {
+    nav { padding: 20px 32px; }
+    nav.scrolled { padding: 14px 32px; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { padding: 120px 32px 60px; }
+    .hero-right { height: 400px; }
+    .hero-stats { display: none; }
+    .services { padding: 80px 32px; }
+    .services-grid { grid-template-columns: 1fr; gap: 2px; }
+    .why { grid-template-columns: 1fr; padding: 80px 32px; }
+    .why-visual { height: 300px; }
+    .testimonials { padding: 80px 32px; }
+    .testi-grid { grid-template-columns: 1fr; }
+    .process { padding: 80px 32px; }
+    .process-steps { grid-template-columns: 1fr 1fr; }
+    .process-steps::before { display: none; }
+    .contact { grid-template-columns: 1fr; padding: 80px 32px; gap: 60px; }
+    .section-header { flex-direction: column; align-items: flex-start; gap: 20px; }
+    .section-desc { text-align: left; }
+    footer { flex-direction: column; gap: 20px; padding: 40px 32px; text-align: center; }
+    .about-strip { padding: 20px 32px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-follower" id="follower"></div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-logo"><span>Magnelly's</span> Yoga</a>
+  <ul class="nav-links">
+    <li><a href="#services">Classes</a></li>
+    <li><a href="#why">Philosophy</a></li>
+    <li><a href="#process">How It Works</a></li>
+    <li><a href="#contact" class="nav-cta">Book Now</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-tag">Puerto Rico's Premier Yoga Experience</div>
+    <h1 class="hero-title">
+      Find Balance.<br>
+      <em>Transform Your World.</em>
+    </h1>
+    <p class="hero-subtitle">
+      Corporate wellness, group sessions, and bespoke event experiences — designed to elevate the body, calm the mind, and unite your team.
+    </p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary"><span>Book a Session</span></a>
+      <a href="#services" class="btn-outline">Explore Classes →</a>
+    </div>
+    <div class="scroll-indicator">
+      <div class="scroll-line"></div>
+      Scroll to explore
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-pattern"></div>
+    <div class="hero-visual">
+      <div class="lotus-container">
+        <svg viewBox="0 0 340 340" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Outer ring -->
+          <circle cx="170" cy="170" r="155" stroke="rgba(255,255,255,0.1)" stroke-width="1" stroke-dasharray="8 4"/>
+          <!-- Lotus petals -->
+          <ellipse cx="170" cy="100" rx="25" ry="65" fill="rgba(255,255,255,0.07)" transform="rotate(0 170 170)"/>
+          <ellipse cx="170" cy="100" rx="25" ry="65" fill="rgba(255,255,255,0.07)" transform="rotate(45 170 170)"/>
+          <ellipse cx="170" cy="100" rx="25" ry="65" fill="rgba(255,255,255,0.07)" transform="rotate(90 170 170)"/>
+          <ellipse cx="170" cy="100" rx="25" ry="65" fill="rgba(255,255,255,0.07)" transform="rotate(135 170 170)"/>
+          <ellipse cx="170" cy="100" rx="25" ry="65" fill="rgba(255,255,255,0.07)" transform="rotate(180 170 170)"/>
+          <ellipse cx="170" cy="100" rx="25" ry="65" fill="rgba(255,255,255,0.07)" transform="rotate(225 170 170)"/>
+          <ellipse cx="170" cy="100" rx="25" ry="65" fill="rgba(255,255,255,0.07)" transform="rotate(270 170 170)"/>
+          <ellipse cx="170" cy="100" rx="25" ry="65" fill="rgba(255,255,255,0.07)" transform="rotate(315 170 170)"/>
+          <!-- Inner petals -->
+          <ellipse cx="170" cy="122" rx="16" ry="44" fill="rgba(201,169,110,0.18)" transform="rotate(0 170 170)"/>
+          <ellipse cx="170" cy="122" rx="16" ry="44" fill="rgba(201,169,110,0.18)" transform="rotate(60 170 170)"/>
+          <ellipse cx="170" cy="122" rx="16" ry="44" fill="rgba(201,169,110,0.18)" transform="rotate(120 170 170)"/>
+          <ellipse cx="170" cy="122" rx="16" ry="44" fill="rgba(201,169,110,0.18)" transform="rotate(180 170 170)"/>
+          <ellipse cx="170" cy="122" rx="16" ry="44" fill="rgba(201,169,110,0.18)" transform="rotate(240 170 170)"/>
+          <ellipse cx="170" cy="122" rx="16" ry="44" fill="rgba(201,169,110,0.18)" transform="rotate(300 170 170)"/>
+          <!-- Center -->
+          <circle cx="170" cy="170" r="28" fill="rgba(201,169,110,0.25)" stroke="rgba(201,169,110,0.4)" stroke-width="1"/>
+          <circle cx="170" cy="170" r="14" fill="rgba(201,169,110,0.5)"/>
+          <!-- Yoga figure (simple) -->
+          <circle cx="170" cy="140" r="8" stroke="rgba(255,255,255,0.5)" stroke-width="1.5" fill="none"/>
+          <line x1="170" y1="148" x2="170" y2="175" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/>
+          <line x1="155" y1="158" x2="185" y2="158" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/>
+          <line x1="170" y1="175" x2="155" y2="195" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/>
+          <line x1="170" y1="175" x2="185" y2="195" stroke="rgba(255,255,255,0.5)" stroke-width="1.5"/>
+        </svg>
+      </div>
+    </div>
+    <div class="hero-quote">
+      "Yoga is not about touching your toes,<br>it's about what you learn on the way down."
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-number">5+</div>
+        <div class="stat-label">Years<br>Experience</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">200+</div>
+        <div class="stat-label">Sessions<br>Delivered</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">50+</div>
+        <div class="stat-label">Corporate<br>Clients</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STRIP -->
+<div class="about-strip">
+  <div class="strip-text">
+    Corporate Wellness &nbsp;·&nbsp; Group Classes &nbsp;·&nbsp; Special Events &nbsp;·&nbsp; Team Retreats &nbsp;·&nbsp; Mindfulness Programs &nbsp;·&nbsp; Professional Yoga &nbsp;·&nbsp; Puerto Rico &nbsp;·&nbsp;
+    Corporate Wellness &nbsp;·&nbsp; Group Classes &nbsp;·&nbsp; Special Events &nbsp;·&nbsp; Team Retreats &nbsp;·&nbsp; Mindfulness Programs &nbsp;·&nbsp; Professional Yoga &nbsp;·&nbsp; Puerto Rico &nbsp;·&nbsp;
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="section-header reveal">
+    <div>
+      <div class="section-label">What We Offer</div>
+      <h2 class="section-title">Yoga <em>Experiences</em><br>Built for You</h2>
+    </div>
+    <p class="section-desc">Every session is thoughtfully crafted to meet your team, group, or event exactly where it needs to be.</p>
+  </div>
+
+  <div class="services-grid">
+    <div class="service-card reveal reveal-delay-1">
+      <div class="service-number">01</div>
+      <div class="service-icon">
+        <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="6" y="10" width="36" height="28" rx="2" stroke="#7d9e8c" stroke-width="1.5"/>
+          <line x1="6" y1="18" x2="42" y2="18" stroke="#7d9e8c" stroke-width="1.5"/>
+          <line x1="18" y1="10" x2="18" y2="38" stroke="#7d9e8c" stroke-width="1.5"/>
+          <circle cx="12" cy="14" r="2" fill="#7d9e8c"/>
+          <circle cx="24" cy="28" r="5" stroke="#c9a96e" stroke-width="1.5"/>
+          <line x1="24" y1="23" x2="24" y2="33" stroke="#c9a96e" stroke-width="1.5"/>
+          <line x1="19" y1="28" x2="29" y2="28" stroke="#c9a96e" stroke-width="1.5"/>
+        </svg>
+      </div>
+      <h3 class="service-name">Corporate Wellness</h3>
+      <p class="service-desc">Bring mindfulness and movement directly to your workplace. Reduce stress, boost productivity, and foster a culture of wellbeing.</p>
+      <ul class="service-features">
+        <li>On-site & virtual sessions available</li>
+        <li>Customized programs for your team</li>
+        <li>Flexible scheduling — morning or lunch</li>
+        <li>Monthly wellness packages</li>
+        <li>Progress & wellness reporting</li>
+      </ul>
+      <a href="#contact" class="service-link">Request a Quote →</a>
+    </div>
+
+    <div class="service-card featured reveal reveal-delay-2">
+      <div class="service-number">02</div>
+      <div class="service-icon">
+        <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="16" cy="12" r="5" stroke="#c9a96e" stroke-width="1.5"/>
+          <circle cx="32" cy="12" r="5" stroke="#c9a96e" stroke-width="1.5"/>
+          <line x1="16" y1="17" x2="16" y2="34" stroke="#c9a96e" stroke-width="1.5"/>
+          <line x1="32" y1="17" x2="32" y2="34" stroke="#c9a96e" stroke-width="1.5"/>
+          <line x1="8" y1="24" x2="24" y2="24" stroke="#c9a96e" stroke-width="1.5"/>
+          <line x1="24" y1="24" x2="40" y2="24" stroke="#c9a96e" stroke-width="1.5"/>
+          <line x1="16" y1="34" x2="10" y2="44" stroke="#c9a96e" stroke-width="1.5"/>
+          <line x1="16" y1="34" x2="22" y2="44" stroke="#c9a96e" stroke-width="1.5"/>
+          <line x1="32" y1="34" x2="26" y2="44" stroke="#c9a96e" stroke-width="1.5"/>
+          <line x1="32" y1="34" x2="38" y2="44" stroke="#c9a96e" stroke-width="1.5"/>
+        </svg>
+      </div>
+      <h3 class="service-name">Group Classes</h3>
+      <p class="service-desc">Dynamic, energizing group sessions perfect for friend groups, fitness clubs, and community organizations looking to practice together.</p>
+      <ul class="service-features">
+        <li>All levels welcome — beginner to advanced</li>
+        <li>Indoor & outdoor locations</li>
+        <li>Up to 30 participants per session</li>
+        <li>Hatha, Vinyasa & Restorative styles</li>
+        <li>Equipment provided on request</li>
+      </ul>
+      <a href="#contact" class="service-link">Book a Group Session →</a>
+    </div>
+
+    <div class="service-card reveal reveal-delay-3">
+      <div class="service-number">03</div>
+      <div class="service-icon">
+        <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M24 6 L30 18 L44 18 L33 27 L37 41 L24 33 L11 41 L15 27 L4 18 L18 18 Z" stroke="#7d9e8c" stroke-width="1.5" fill="none"/>
+          <circle cx="24" cy="24" r="5" stroke="#c9a96e" stroke-width="1.5" fill="none"/>
+        </svg>
+      </div>
+      <h3 class="service-name">Events & Retreats</h3>
+      <p class="service-desc">Elevate your next event with a bespoke yoga experience — from bachelorette parties and birthday retreats to corporate offsites and wellness fairs.</p>
+      <ul class="service-features">
+        <li>Custom themed experiences</li>
+        <li>Private & semi-private options</li>
+        <li>Coordinator for full logistics</li>
+        <li>Meditation & breathwork add-ons</li>
+        <li>Available islandwide in Puerto Rico</li>
+      </ul>
+      <a href="#contact" class="service-link">Plan Your Event →</a>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section class="why" id="why">
+  <div class="why-visual reveal">
+    <div class="why-block why-block-1">
+      <svg viewBox="0 0 200 200" class="yoga-svg-large" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="50" r="20" stroke="white" stroke-width="2"/>
+        <line x1="100" y1="70" x2="100" y2="130" stroke="white" stroke-width="2"/>
+        <line x1="60" y1="90" x2="140" y2="90" stroke="white" stroke-width="2"/>
+        <line x1="100" y1="130" x2="70" y2="170" stroke="white" stroke-width="2"/>
+        <line x1="100" y1="130" x2="130" y2="170" stroke="white" stroke-width="2"/>
+        <!-- Extended arms (warrior pose) -->
+        <line x1="60" y1="90" x2="30" y2="70" stroke="white" stroke-width="2"/>
+        <line x1="140" y1="90" x2="170" y2="70" stroke="white" stroke-width="2"/>
+      </svg>
+    </div>
+    <div class="why-block why-block-2">
+      <div class="why-inner-number">100%</div>
+      <div class="why-inner-label">Personalized<br>Approach</div>
+    </div>
+  </div>
+  <div class="why-right reveal reveal-delay-1">
+    <div class="section-label">Our Philosophy</div>
+    <h2 class="section-title">Why Choose <em>Magnelly's</em> Yoga</h2>
+    <div class="why-points">
+      <div class="why-point">
+        <div class="why-point-icon">
+          <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 1 L11 7 L17 7 L12 11 L14 17 L9 13 L4 17 L6 11 L1 7 L7 7 Z" stroke="white" stroke-width="1.2" fill="none"/>
+          </svg>
+        </div>
+        <div>
+          <div class="why-point-title">Expert & Certified Instructor</div>
+          <p class="why-point-desc">Magnelly brings professional certification and years of real-world experience across corporate and community settings throughout Puerto Rico.</p>
+        </div>
+      </div>
+      <div class="why-point">
+        <div class="why-point-icon">
+          <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="9" cy="9" r="7" stroke="white" stroke-width="1.2"/>
+            <path d="M6 9 L8 11 L12 7" stroke="white" stroke-width="1.2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div>
+          <div class="why-point-title">Fully Customized Programs</div>
+          <p class="why-point-desc">No cookie-cutter classes. Every session is tailored to your team's fitness levels, goals, and schedule — ensuring maximum impact and engagement.</p>
+        </div>
+      </div>
+      <div class="why-point">
+        <div class="why-point-icon">
+          <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2" y="2" width="14" height="14" rx="1" stroke="white" stroke-width="1.2"/>
+            <path d="M5 9 Q9 5 13 9 Q9 13 5 9" stroke="white" stroke-width="1.2" fill="none"/>
+          </svg>
+        </div>
+        <div>
+          <div class="why-point-title">Flexible & Mobile</div>
+          <p class="why-point-desc">We come to you — your office, your venue, your event space. Serving all of Puerto Rico with seamless logistics and zero hassle.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials" id="about">
+  <div class="section-header reveal">
+    <div>
+      <div class="section-label">Voices</div>
+      <h2 class="section-title">What Our <em>Community</em> Says</h2>
+    </div>
+  </div>
+  <div class="testi-grid">
+    <div class="testi-card reveal reveal-delay-1">
+      <div class="testi-stars">
+        <svg viewBox="0 0 12 12"><polygon points="6,1 7.5,4.5 11,5 8.5,7.5 9,11 6,9.5 3,11 3.5,7.5 1,5 4.5,4.5"/></svg>
+        <svg viewBox="0 0 12 12"><polygon points="6,1 7.5,4.5 11,5 8.5,7.5 9,11 6,9.5 3,11 3.5,7.5 1,5 4.5,4.5"/></svg>
+        <svg viewBox="0 0 12 12"><polygon points="6,1 7.5,4.5 11,5 8.5,7.5 9,11 6,9.5 3,11 3.5,7.5 1,5 4.5,4.5"/></svg>
+        <svg viewBox="0 0 12 12"><polygon points="6,1 7.5,4.5 11,5 8.5,7.5 9,11 6,9.5 3,11 3.5,7.5 1,5 4.5,4.5"/></svg>
+        <svg viewBox="0 0 12 12"><polygon points="6,1 7.5,4.5 11,5 8.5,7.5 9,11 6,9.5 3,11 3.5,7.5 1,5 4.5,4.5"/></svg>
+      </div>
+      <p class="testi-text">"Magnelly completely transformed our Friday wellness program. Our team's energy and morale improved dramatically — even our most skeptical employees became regulars."</p>
+      <div class="testi-author">María L.</div>
+      <div class="testi-role">HR Director, Tech Company · San Juan</div>
+    </div>
+    <div class="testi-card reveal reveal-delay-2">
+      <div class="testi-stars">
+        <svg viewBox="0 0 12 12"><polygon points="6,1 7.5,4.5 11,5 8.5,7.5 9,11 6,9.5 3,11 3.5,7.5 1,5 4.5,4.5"/></svg>
+        <svg viewBox="0 0 12 12"><polygon points="6,1 7.5,4.5 11,5 8.5,7.5 9,11 6,9.5 3,11 3.5,7.5 1,5 4.5,4.5"/></svg>
+        <svg viewBox="0 0 12 12"><polygon points="6,1 7.5,4.5 11,5 8.5,7.5 9,11 6,9.5 3,11 3.5,7.5 1,5 4.5,4.5"/></svg>
+        <svg viewBox="0 0 12 12"><polygon points="6,1 7.5,4.5 11,5 8.5,7.5 9,11 6,9.5 3,11 3.5,7.5 1,5 4.5,4.5"/></svg>
+        <svg viewBox="0 0 12 12"><polygon points="6,1 7.5,4.5 11,5 8.5,7.5 9,11 6,9.5 3,11 3.5,7.5 1,5 4.5,4.5"/></svg>
+      </div>
+      <p class="testi-text">"We hired Magnelly for our corporate retreat and it was the highlight of the entire weekend. Professional, warm, incredibly skilled — our whole team left feeling renewed."</p>
+      <div class="testi-author">Carlos R.</div>
+      <div class="testi-role">CEO, Financial Firm · Guaynabo</div>
+    </div>
+    <div class="testi-card reveal reveal-delay-3">
+      <div class="testi-stars">
+        <svg viewBox="0 0 12 12"><polygon points="6,1 7.5,4.5 11,5 8.5,7.5 9,11 6,9.5 3,11 3.5,7.5 1,5 4.5,4.5"/></svg>
+        <svg viewBox="0 0 12 12"><polygon points="6,1 7.5,4.5 11,5 8.5,7.5 9,11 6,9.5 3,11 3.5,7.5 1,5 4.5,4.5"/></svg>
+        <svg viewBox="0 0 12 12"><polygon points="6,1 7.5,4.5 11,5 8.5,7.5 9,11 6,9.5 3,11 3.5,7.5 1,5 4.5,4.5"/></svg>
+        <svg viewBox="0 0 12 12"><polygon points="6,1 7.5,4.5 11,5 8.5,7.5 9,11 6,9.5 3,11 3.5,7.5 1,5 4.5,4.5"/></svg>
+        <svg viewBox="0 0 12 12"><polygon points="6,1 7.5,4.5 11,5 8.5,7.5 9,11 6,9.5 3,11 3.5,7.5 1,5 4.5,4.5"/></svg>
+      </div>
+      <p class="testi-text">"Our bachelorette yoga event was absolutely magical. Magnelly made every one of us feel comfortable and empowered. I can't recommend her enough for any celebration!"</p>
+      <div class="testi-author">Valeria M.</div>
+      <div class="testi-role">Event Attendee · Condado</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process" id="process">
+  <div class="section-header reveal">
+    <div>
+      <div class="section-label">Simple Process</div>
+      <h2 class="section-title">How It <em>Works</em></h2>
+    </div>
+    <p class="section-desc">From first contact to final savasana — a seamless, stress-free experience from start to finish.</p>
+  </div>
+  <div class="process-steps">
+    <div class="step reveal reveal-delay-1">
+      <div class="step-num">1</div>
+      <div class="step-title">Reach Out</div>
+      <p class="step-desc">Call or message Magnelly directly. Tell us about your group size, goals, and preferred dates.</p>
+    </div>
+    <div class="step reveal reveal-delay-2">
+      <div class="step-num">2</div>
+      <div class="step-title">Custom Plan</div>
+      <p class="step-desc">We design a session or program specifically tailored to your needs, level, and objectives.</p>
+    </div>
+    <div class="step reveal reveal-delay-3">
+      <div class="step-num">3</div>
+      <div class="step-title">Confirm & Prepare</div>
+      <p class="step-desc">Finalize details, confirm logistics. We handle everything so you can focus on showing up.</p>
+    </div>
+    <div class="step reveal reveal-delay-4">
+      <div class="step-num">4</div>
+      <div class="step-title">Transform</div>
+      <p class="step-desc">Experience a world-class yoga session that leaves your team or group energized, connected, and inspired.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-left">
+    <div class="section-label">Get In Touch</div>
+    <h2 class="section-title">Ready to Begin Your<br><em>Journey?</em></h2>
+    <p class="contact-tagline">Whether you're planning a corporate program, a group class, or a special event — Magnelly is here to make it extraordinary. Reach out today.</p>
+    <div class="contact-details">
+      <div class="contact-item">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.1 12 19.79 19.79 0 0 1 1.07 3.4C1.08 2.18 1.9 1 3.1 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div>
+          <div class="contact-info-label">Phone / WhatsApp</div>
+          <a href="tel:7875174468" class="contact-info-value">(787) 517-4468</a>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="12" cy="10" r="3" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <div>
+          <div class="contact-info-label">Location</div>
+          <div class="contact-info-value">Puerto Rico Islandwide</div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="10" stroke-width="1.5"/>
+            <polyline points="12 6 12 12 16 14" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div>
+          <div class="contact-info-label">Availability</div>
+          <div class="contact-info-value">Mon – Sat, 6am – 8pm</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="contact-right">
+    <div class="contact-form-box">
+      <div class="form-title">Send a Message</div>
+      <div class="form-subtitle">We'll get back to you within 24 hours</div>
+      <div class="form-group">
+        <label>Your Name</label>
+        <input type="text" placeholder="Full name">
+      </div>
+      <div class="form-group">
+        <label>Phone Number</label>
+        <input type="tel" placeholder="Your phone number">
+      </div>
+      <div class="form-group">
+        <label>Service Interested In</label>
+        <select>
+          <option value="">Select a service...</option>
+          <option>Corporate Wellness Program</option>
+          <option>Group Classes</option>
+          <option>Special Event / Retreat</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Tell Us More</label>
+        <textarea placeholder="Group size, preferred dates, location, goals..."></textarea>
+      </div>
+      <button class="form-btn" onclick="handleSubmit()">Send Message</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo"><span>Magnelly's</span> Yoga</div>
+  <div class="footer-tagline">"Breathe. Move. Transform."</div>
+  <div class="footer-copy">© 2025 Magnelly's Yoga · Puerto Rico</div>
+</footer>
+
+<script>
+// Custom cursor
+const cursor = document.getElementById('cursor');
+const follower = document.getElementById('follower');
+let mouseX = 0, mouseY = 0;
+let followerX = 0, followerY = 0;
+
+document.addEventListener('mousemove', (e) => {
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+  cursor.style.left = mouseX + 'px';
+  cursor.style.top = mouseY + 'px';
+});
+
+function animateFollower() {
+  followerX += (mouseX - followerX) * 0.12;
+  followerY += (mouseY - followerY) * 0.12;
+  follower.style.left = followerX + 'px';
+  follower.style.top = followerY + 'px';
+  requestAnimationFrame(animateFollower);
+}
+animateFollower();
+
+// Hover cursor expand
+document.querySelectorAll('a, button, .service-card, .testi-card, .step').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cursor.style.transform = 'translate(-50%, -50%) scale(2.5)';
+    cursor.style.background = '#c9a96e';
+    follower.style.transform = 'translate(-50%, -50%) scale(1.5)';
+  });
+  el.addEventListener('mouseleave', () => {
+    cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+    cursor.style.background = '#7d9e8c';
+    follower.style.transform = 'translate(-50%, -50%) scale(1)';
+  });
+});
+
+// Navbar scroll
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// Scroll reveal
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.15 });
+
+reveals.forEach(el => observer.observe(el));
+
+// Form submit
+function handleSubmit() {
+  const btn = document.querySelector('.form-btn');
+  btn.textContent = '✓ Message Sent! We\'ll be in touch.';
+  btn.style.background = '#7d9e8c';
+  btn.style.color = 'white';
+  setTimeout(() => {
+    btn.textContent = 'Send Message';
+    btn.style.background = '';
+    btn.style.color = '';
+  }, 4000);
+}
+
+// Smooth scroll for nav links
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(link.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+</script>
+</body>
+</html>
